@@ -6,7 +6,9 @@ import ModalAddNew from "./ModalAddNew";
 import ModalEditUser from "./ModalEditUser";
 import ModalConfirm from "./ModalConfirm";
 import ReactPaginate from "react-paginate";
-import _ from "lodash";
+import "./TableUsers.scss";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import _, { debounce } from "lodash";
 
 const TableUsers = (props) => {
   const [listUsers, setListUsers] = useState([]);
@@ -17,6 +19,9 @@ const TableUsers = (props) => {
   const [isShowModalDeleteUser, setIsShowModalDeleteUser] = useState(false);
   const [dataUserEdit, setDataUserEdit] = useState({});
   const [dataUserDelete, setDataUserDelete] = useState({});
+  const [sortBy, setSortBy] = useState("desc");
+  const [sortField, setSortField] = useState("id");
+  const [keyword, setKeyword] = useState("");
 
   const handleClose = () => {
     setIsShowModalAddNew(false);
@@ -72,6 +77,32 @@ const TableUsers = (props) => {
     setListUsers(cloneListUser);
   };
 
+  const handleSort = (sortBy, sortField) => {
+    setSortBy(sortBy);
+    setSortField(sortField);
+    let cloneListUser = _.cloneDeep(listUsers);
+    cloneListUser = _.orderBy(cloneListUser, [sortField], [sortBy]);
+    console.log("cloneListUser: ", cloneListUser);
+    setListUsers(cloneListUser);
+  };
+
+  const handleSearch = debounce((event) => {
+    let term = event.target.value;
+    console.log("event: ", event.target.value);
+
+    if (term) {
+      let cloneListUser = _.cloneDeep(listUsers);
+      cloneListUser = cloneListUser.filter((item) => item.email.includes(term));
+      setListUsers(cloneListUser);
+
+      // cloneListUser = _.includes(cloneListUser, (item) => item.includes);
+    } else {
+      getUsers(1);
+    }
+  }, 500);
+
+  // console.log("tung check:", sortBy, sortField);
+
   return (
     <>
       <div className="my-3 add-new">
@@ -84,13 +115,45 @@ const TableUsers = (props) => {
           Add new user
         </button>
       </div>
+      <div className="col-4 my-3">
+        <input
+          className="form-control"
+          placeholder="Search user by email..."
+          // value={keyword}
+          onChange={(event) => handleSearch(event)}
+        />
+      </div>
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th>ID</th>
+            <th>
+              <div className="sort-header">
+                <span>ID</span>
+                <span>
+                  <i
+                    className="fa-solid fa-arrow-up-long"
+                    onClick={() => handleSort("desc", "id")}></i>
+                  <i
+                    className="fa-solid fa-arrow-down-long"
+                    onClick={() => handleSort("asc", "id")}></i>
+                </span>
+              </div>
+            </th>
             <th>Avatar</th>
             <th>Email</th>
-            <th>First Name</th>
+            <th>
+              <div className="sort-header">
+                <span>First Name</span>
+                <span>
+                  <i
+                    className="fa-solid fa-arrow-up-long"
+                    onClick={() => handleSort("desc", "first_name")}></i>
+                  <i
+                    className="fa-solid fa-arrow-down-long"
+                    onClick={() => handleSort("asc", "first_name")}></i>
+                </span>
+              </div>
+            </th>
             <th>Last Name</th>
             <th>Action</th>
           </tr>
