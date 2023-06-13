@@ -9,6 +9,7 @@ import ReactPaginate from "react-paginate";
 import "./TableUsers.scss";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import _, { debounce } from "lodash";
+import { CSVLink, CSVDownload } from "react-csv";
 
 const TableUsers = (props) => {
   const [listUsers, setListUsers] = useState([]);
@@ -103,17 +104,42 @@ const TableUsers = (props) => {
 
   // console.log("tung check:", sortBy, sortField);
 
+  const csvData = [
+    ["firstname", "lastname", "email"],
+    ["Ahmed", "Tomi", "ah@smthing.co.com"],
+    ["Raed", "Labes", "rl@smthing.co.com"],
+    ["Yezzi", "Min l3b", "ymin@cocococo.com"],
+  ];
   return (
     <>
       <div className="my-3 add-new">
-        <span> List Users:</span>
-        <button
-          className="btn btn-success"
-          onClick={() => {
-            setIsShowModalAddNew(true);
-          }}>
-          Add new user
-        </button>
+        <span>
+          <b> List Users:</b>
+        </span>
+        <div className="group-btns">
+          <label htmlFor="import" className="btn btn-warning text-white">
+            <i class="fa-solid fa-file-import"></i>
+            <span> Import</span>
+          </label>
+          <input id="import" type="file" hidden />
+
+          <CSVLink
+            data={csvData}
+            filename={"user.csv"}
+            className="btn btn-primary mx-2">
+            <i class="fa-solid fa-file-export"></i>
+            <span> Download</span>
+          </CSVLink>
+
+          <button
+            className="btn btn-success p"
+            onClick={() => {
+              setIsShowModalAddNew(true);
+            }}>
+            <i className="fa-solid fa-circle-plus "></i>
+            <span> Add new</span>
+          </button>
+        </div>
       </div>
       <div className="col-4 my-3">
         <input
