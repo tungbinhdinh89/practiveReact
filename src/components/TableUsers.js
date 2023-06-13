@@ -23,6 +23,7 @@ const TableUsers = (props) => {
   const [sortBy, setSortBy] = useState("desc");
   const [sortField, setSortField] = useState("id");
   const [keyword, setKeyword] = useState("");
+  const [dataExport, setDataExport] = useState([]);
 
   const handleClose = () => {
     setIsShowModalAddNew(false);
@@ -102,14 +103,29 @@ const TableUsers = (props) => {
     }
   }, 500);
 
-  // console.log("tung check:", sortBy, sortField);
+  // const csvData = [
+  //   ["firstname", "lastname", "email"],
+  //   ["Ahmed", "Tomi", "ah@smthing.co.com"],
+  //   ["Raed", "Labes", "rl@smthing.co.com"],
+  //   ["Yezzi", "Min l3b", "ymin@cocococo.com"],
+  // ];
 
-  const csvData = [
-    ["firstname", "lastname", "email"],
-    ["Ahmed", "Tomi", "ah@smthing.co.com"],
-    ["Raed", "Labes", "rl@smthing.co.com"],
-    ["Yezzi", "Min l3b", "ymin@cocococo.com"],
-  ];
+  const getUsersExport = (event, done) => {
+    let result = [];
+    if (listUsers && listUsers.length > 0) {
+      result.push(["Id", "Email", "First Name", "Last Name"]);
+      listUsers.map((item) => {
+        let arr = [];
+        arr[0] = item.id;
+        arr[1] = item.email;
+        arr[2] = item.first_name;
+        arr[3] = item.last_name;
+        result.push(arr);
+      });
+      setDataExport(result);
+      done();
+    }
+  };
   return (
     <>
       <div className="my-3 add-new">
@@ -124,7 +140,9 @@ const TableUsers = (props) => {
           <input id="import" type="file" hidden />
 
           <CSVLink
-            data={csvData}
+            data={dataExport}
+            asyncOnClick={true}
+            onClick={getUsersExport}
             filename={"user.csv"}
             className="btn btn-primary mx-2">
             <i class="fa-solid fa-file-export"></i>
