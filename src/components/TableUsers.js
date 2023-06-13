@@ -9,7 +9,7 @@ import ReactPaginate from "react-paginate";
 import "./TableUsers.scss";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import _, { debounce } from "lodash";
-import { CSVLink, CSVDownload } from "react-csv";
+import { CSVLink } from "react-csv";
 
 const TableUsers = (props) => {
   const [listUsers, setListUsers] = useState([]);
