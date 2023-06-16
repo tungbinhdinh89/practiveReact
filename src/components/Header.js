@@ -36,6 +36,9 @@ const Header = (props) => {
             <Nav>
               <NavDropdown title="Setting" id="basic-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">Login</NavDropdown.Item>
+                <NavLink to={"/login"} className="dropdown-item">
+                  Login
+                </NavLink>
                 <NavDropdown.Item href="#action/3.2">Logout</NavDropdown.Item>
               </NavDropdown>
             </Nav>
