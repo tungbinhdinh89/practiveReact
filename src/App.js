@@ -4,6 +4,7 @@ import Home from "./components/Home";
 import { Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import UserTemplate from "./components";
+import Login from "./components/Login";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
             path="/users"
             element={<UserTemplate Component={TableUsers} />}
           />
+          <Route path="/login" element={<UserTemplate Component={Login} />} />
         </Routes>
       </div>
       <ToastContainer
