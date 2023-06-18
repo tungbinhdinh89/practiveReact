@@ -31,7 +31,7 @@ const Header = (props) => {
     <>
       <Navbar bg="light" expand="lg">
         <Container>
-          <Navbar.Brand href="#home">
+          <Navbar.Brand href="/">
             <img
               src={logoApp}
               width="30"
