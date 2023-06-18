@@ -10,7 +10,7 @@
 
 .app-container {
   .add-new{
-    display: flex;
+    // display: flex;
     align-items: center;
     justify-content: space-between;
   } 
@@ -21,4 +21,19 @@
   i {
     padding: 0 2px;
   }
+ 
+}
+
+.customize-table {
+  width: inherit;
+  overflow-x: auto;
+}
+
+.pagination {
+  justify-content: center;
+}
+.button-action{
+  display: flex;
+ 
+  
 }
